@@ -13,6 +13,8 @@ class Carro(models.Model):
         db_table = 'carro'
 
     id_carro = models.IntegerField(primary_key=True, unique=True)
+    fabricante = models.CharField(max_length=100)
+    modelo = models.CharField(max_length=100)
     data_criacao = models.DateField(auto_now_add=True)
     placa = models.CharField(max_length=10)
     quilometragem = models.IntegerField()
