@@ -1,5 +1,9 @@
 from django.db import models
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 # Create your models here.
 
 
@@ -12,15 +16,15 @@ class Carro(models.Model):
     class Meta:
         db_table = 'carro'
 
-    id_carro = models.IntegerField(primary_key=True, unique=True)
+    id_carro = models.AutoField(primary_key=True)
     fabricante = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100)
     data_criacao = models.DateField(auto_now_add=True)
-    placa = models.CharField(max_length=10)
+    placa = models.CharField(max_length=10, unique=True)
     quilometragem = models.IntegerField()
 
     def __str__(self):
-        return self.id_carro
+        return self.placa + ' - ' + self.modelo.upper()
 
 
 class Cdc(models.Model):
@@ -32,12 +36,12 @@ class Cdc(models.Model):
     class Meta:
         db_table = 'cdc'
 
-    id_cdc = models.IntegerField(primary_key=True, unique=True)
+    id_cdc = models.AutoField(primary_key=True)
     data_criacao = models.DateField(auto_now_add=True)
-    nome = models.CharField(max_length=30)
+    nome = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
-        return self.id_cdc
+        return self.nome.upper()
 
 
 class Registro(models.Model):
@@ -49,7 +53,7 @@ class Registro(models.Model):
     class Meta:
         db_table = 'registro'
 
-    id_registro = models.IntegerField(primary_key=True, unique=True)
+    id_registro = models.AutoField(primary_key=True)
     data_inicial = models.DateField(auto_now_add=True)
     data_final = models.DateField()
     condutor = models.CharField(max_length=50, blank=False, null=False)
@@ -61,4 +65,4 @@ class Registro(models.Model):
     id_cdc = models.OneToOneField(Cdc, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.id_registro
+        return self.condutor + ' - ' + self.descricao

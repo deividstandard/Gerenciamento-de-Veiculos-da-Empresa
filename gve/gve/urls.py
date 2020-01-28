@@ -19,7 +19,10 @@ from django.contrib import admin
 from django.conf.urls import url
 from rest_framework import routers
 
+version = 'v0'
 
-router = routers.SimpleRouter()
-router.register(r'carros', views.Carro)
+router = routers.DefaultRouter()
+router.register(r'api/' + version + '/carros', views.Carro)
+router.register(r'api/' + version + '/registros', views.Registro)
+router.register(r'api/' + version + '/cdcs', views.Cdc)
 urlpatterns = router.urls
