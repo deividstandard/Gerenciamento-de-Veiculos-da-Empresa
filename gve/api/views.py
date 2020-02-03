@@ -1,6 +1,6 @@
-from .models import Cdc
-from .models import Carro
-from .models import Registro
+from .models import CdcModel
+from .models import CarroModel
+from .models import RegistroModel
 
 from rest_framework import viewsets
 from rest_framework import generics
@@ -11,17 +11,19 @@ from .serializers import SerializadorRegistro
 # Create your views here.
 
 
-class Carro(viewsets.ModelViewSet):
+class CarroViewSet(viewsets.ModelViewSet):
 
-    queryset = Carro.objects.all()
+    queryset = CarroModel.objects.all()
     serializer_class = SerializadorCarro
 
-class Registro(viewsets.ModelViewSet):
 
-    queryset = Registro.objects.all()
+class RegistroViewSet(viewsets.ModelViewSet):
+
+    queryset = RegistroModel.objects.all()
     serializer_class = SerializadorRegistro
 
-class Cdc(viewsets.ModelViewSet):
 
-    queryset = Cdc.objects.all()
+class CdcViewSet(viewsets.ModelViewSet):
+
+    queryset = CdcModel.objects.all()
     serializer_class = SerializadorCdc

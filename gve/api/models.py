@@ -7,7 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 
-class Carro(models.Model):
+class CarroModel(models.Model):
     '''
     Definição de atributos para recurso
     carro
@@ -27,7 +27,7 @@ class Carro(models.Model):
         return self.placa + ' - ' + self.modelo.upper()
 
 
-class Cdc(models.Model):
+class CdcModel(models.Model):
     '''
     Definição de atributos para recurso
     carro
@@ -44,7 +44,7 @@ class Cdc(models.Model):
         return self.nome.upper()
 
 
-class Registro(models.Model):
+class RegistroModel(models.Model):
     '''
     Definição de atributos para recurso
     registro
@@ -55,14 +55,14 @@ class Registro(models.Model):
 
     id_registro = models.AutoField(primary_key=True)
     data_inicial = models.DateField(auto_now_add=True)
-    data_final = models.DateField()
+    data_final = models.DateField(blank=True, null=True)
     condutor = models.CharField(max_length=50, blank=False, null=False)
     descricao = models.CharField(max_length=200, blank=False)
     quilometragem_inicial = models.IntegerField()
-    quilometragem_final = models.IntegerField()
+    quilometragem_final = models.IntegerField(blank=True, null=True)
     id_carro = models.OneToOneField(
-        Carro, on_delete=models.SET_NULL, null=True)
-    id_cdc = models.OneToOneField(Cdc, on_delete=models.SET_NULL, null=True)
+        CarroModel, on_delete=models.SET_NULL, null=True)
+    id_cdc = models.OneToOneField(CdcModel, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.condutor + ' - ' + self.descricao

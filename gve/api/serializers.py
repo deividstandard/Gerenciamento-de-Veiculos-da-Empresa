@@ -1,6 +1,6 @@
-from .models import Carro
-from .models import Registro
-from .models import Cdc
+from .models import CarroModel
+from .models import RegistroModel
+from .models import CdcModel
 from rest_framework import serializers
 
 
@@ -8,7 +8,7 @@ class SerializadorCarro(serializers.ModelSerializer):
 
     class Meta:
 
-        model = Carro
+        model = CarroModel
         fields = '__all__'
 
 
@@ -16,7 +16,7 @@ class SerializadorRegistro(serializers.ModelSerializer):
 
     class Meta:
 
-        model = Registro
+        model = RegistroModel
         fields = '__all__'
 
 
@@ -24,5 +24,5 @@ class SerializadorCdc(serializers.ModelSerializer):
 
     class Meta:
 
-        model = Cdc
+        model = CdcModel
         fields = '__all__'

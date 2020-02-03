@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.conf.urls import url
 from rest_framework import routers
 
-version = 'v0'
+from api.views import CarroViewSet
+from api.views import RegistroViewSet
+from api.views import CdcViewSet
+
 
 router = routers.DefaultRouter()
-router.register(r'api/' + version + '/carros', views.Carro)
-router.register(r'api/' + version + '/registros', views.Registro)
-router.register(r'api/' + version + '/cdcs', views.Cdc)
+router.register(r'carros', CarroViewSet, basename='carros')
+router.register(r'registros', RegistroViewSet, basename='registros')
+router.register(r'cdcs', CdcViewSet, basename='cdcs')
+
 urlpatterns = router.urls
