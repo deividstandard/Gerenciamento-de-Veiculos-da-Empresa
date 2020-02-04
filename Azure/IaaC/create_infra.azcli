@@ -1,0 +1,30 @@
+# Autor:    Deivid Soares
+# Date:     03/02/2020
+# Overview: Script para criação da infraestrutura para rodar a API na nuvem
+
+# Realiza login no Azure
+az login
+
+# Lista as assinaturas que o usuário tem acesso
+az account list -o table --all
+
+# Define a assinatura onde seram criados os recursos
+az account set -s <assinatura>
+
+# Cria um grupo de recurso
+az group create --name GRDEV-GALLAGHER-01 --location eastus
+
+# Cria a rede virtual com a subne para o cluster AKS
+az network vnet subnet create --address-prefixes 10.0.0.0/16 --name SNDEV-RORY-01 --resource-group GRDEV-GALLAGHER-01 --vnet-name VNETDEV-GALLAGHER-01
+
+# Cria o service principal para associar com o cluster.
+# Nessa etapa, após rodar este comando deve se acessar o
+# service principal no portal e adicionar um novo secret
+# com sem data de validade
+az ad sp create-for-rbac --skip-assignment
+
+# Cria um registro de imagens para associar com o cluster (Opcional)
+az acr create --name ACRDEVGALLAGHER01 --resource-group GRXXX-XXXXXXXXXXX-01 --sku Basic --location <região> --admin-enabled false 
+
+# Cria o cluster AKS
+az aks create --name AKSDEV-GALLAGHER-01 --resource-group GRDEV-GALLAGHER-01 --service-principal <id do service principal> --node-count 1 --client-secret <secret do service principal> --node-osdisk-size 100 --node-vm-size Standard_D4s_v3 --dns-name-prefix aksprd --vnet-subnet-id /subscriptions/<id da assinatura>/resourceGroups/GRXXX-XXXX-01/providers/Microsoft.Network/virtualNetworks/VNETXXX-XXX-01/subnets/SNXXX-XXXXXXXXXX-01 --dns-service-ip 10.1.0.10 --docker-bridge-address 172.17.0.1/1 --service-cidr 10.1.0.0/16 --network-plugin azure --location <região> --attach-acr ACRDEVGALLAGHER01 --enable-rbac --kubernetes-version <versão desejada> --vm-set-type AvailabilitySet --max-pods 100

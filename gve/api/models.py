@@ -4,8 +4,6 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
-
 
 class CarroModel(models.Model):
     '''
@@ -62,7 +60,8 @@ class RegistroModel(models.Model):
     quilometragem_final = models.IntegerField(blank=True, null=True)
     id_carro = models.OneToOneField(
         CarroModel, on_delete=models.SET_NULL, null=True)
-    id_cdc = models.OneToOneField(CdcModel, on_delete=models.SET_NULL, null=True)
+    id_cdc = models.OneToOneField(
+        CdcModel, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.condutor + ' - ' + self.descricao
